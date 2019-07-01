@@ -1,0 +1,13 @@
+{
+  "_COMMENT": "This is left blank for security reasons, but the format is as follows. Refer to Box API documentation for details on how to retrieve the following data for your specific app.",
+  "boxAppSettings": {
+    "clientID": "<YOUR_CLIENT_ID>",
+    "clientSecret": "<YOUR_CLIENT_SECRET>",
+    "appAuth": {
+      "publicKeyID": "<YOUR_PUBLIC_KEY>",
+      "privateKey": "-----BEGIN ENCRYPTED PRIVATE KEY-----\n<YOUR_CORRESPONDING_PRIVATE_KEY>",
+      "passphrase": "<YOUR_CORRESPONDING_PASSPHRASE>"
+    }
+  },
+  "enterpriseID": "<YOUR_ENTERPRISE_ID>"
+}
