@@ -36,7 +36,6 @@ for record in res.json()['records']:
         ws.write(count, excel_header_dictionary[k], v)
     count += 1
 
-
 # Create name of backup file with timestamp and save
 time_stamp = datetime.datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
 file_name = "Backup_test_" + time_stamp + ".xls"
