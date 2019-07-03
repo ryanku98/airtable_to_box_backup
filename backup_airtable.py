@@ -4,23 +4,6 @@ import sys      # .exit()
 import datetime # datetime
 import os       # .remove()
 
-excel_header_dictionary = {
-    "Name" : 0,
-    "Education" : 1,
-    "Role(s)" : 2,
-    "PC(s)" : 3,
-    "Best experience response" : 4,
-    "Future aspiration response" : 5,
-    "Skills/expertise" : 6,
-    "Brag response" : 7,
-    "Email" : 8,
-    "Phone number" : 9,
-    "Location" : 10,
-    "LinkedIn" : 11,
-    "Resume" : 12,
-    "Submission date" : 13
-}
-
 # Configure AirTable authentication
 at_url = open("airtable_url.txt", "r")
 airtable_api_key = open("airtable_config.txt", "r")
@@ -39,16 +22,20 @@ if res.status_code != 200:
 wb = xlwt.Workbook()
 ws = wb.add_sheet("Resume Backup");
 
-# Create headers in order
-for k, v in excel_header_dictionary.items():
-    ws.write(0, excel_header_dictionary[k], k)
-
 # Write data into corresponding columns
+excel_header_dictionary = {}
 count = 1
+headers = 0
 for record in res.json()['records']:
     for k, v in record['fields'].items():
+        if k not in excel_header_dictionary:
+            # Add headers to dictionary and write to excel file
+            excel_header_dictionary.update({k : headers})
+            ws.write(0, headers, k)
+            headers += 1
         ws.write(count, excel_header_dictionary[k], v)
     count += 1
+
 
 # Create name of backup file with timestamp and save
 time_stamp = datetime.datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
