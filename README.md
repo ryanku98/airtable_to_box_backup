@@ -29,25 +29,26 @@ NOTE: Running automated Python scripts locally would be better with actual [cron
 3. Download & install [Heroku CLI](https://devcenter.heroku.com/articles/getting-started-with-python#set-up)
 4. Download / clone this repository
 5. Using Heroku CLI, run the following commands (Command Prompt for Windows, Terminal for OS X, etc.)
-  1. Log into your Heroku account:
-  ```bash
-  heroku login
-  ```
-  2. Create a Heroku application:
-  ```bash
-  heroku apps:create <your-heroku-app-name>
-  ```
-  NOTE: All Heroku apps must have unique names, so you may need to try multiple times for a unique app name
-  3. Verify that the local git repository is configured with an extra Heroku remote:
-  ```bash
-  git remote -v
-  ```
-  4. Add, commit, and push code to Heroku's master branch:
-  ```bash
-  git add .
-  git commit -am "Initial commit"
-  git push heroku master
-  ```
+    1. Log into your Heroku account:
+    ```bash
+    heroku login
+    ```
+    2. Create a Heroku application:
+    ```bash
+    heroku apps:create <your-heroku-app-name>
+    ```
+    NOTE: All Heroku apps must have unique names, so you may need to try multiple times for a unique app name
+    
+    3. Verify that the local git repository is configured with an extra Heroku remote:
+    ```bash
+    git remote -v
+    ```
+    4. Add, commit, and push code to Heroku's master branch:
+    ```bash
+    git add .
+    git commit -am "Initial commit"
+    git push heroku master
+    ```
 6. Specify number of workers for this application:
 ```bash
 heroku ps:scale worker=1
