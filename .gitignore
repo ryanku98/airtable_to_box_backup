@@ -1,0 +1,5 @@
+# Compiled files
+__pycache__/
+
+# Local backups
+AirTable_Backup_*
