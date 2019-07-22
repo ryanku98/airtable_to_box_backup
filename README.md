@@ -38,14 +38,13 @@ NOTE: Running automated Python scripts locally would be better with actual [cron
     heroku apps:create <your-heroku-app-name>
     ```
     NOTE: All Heroku apps must have unique names, so you may need to try multiple times for a unique app name
-    
+
     3. Verify that the local git repository is configured with an extra Heroku remote:
     ```bash
     git remote -v
     ```
     4. Add, commit, and push code to Heroku's master branch:
     ```bash
-    git add .
     git commit -am "Initial commit"
     git push heroku master
     ```
@@ -65,3 +64,12 @@ heroku ps:stop worker.1
 heroku ps:restart worker.1
 ```
 If you're getting errors, run `heroku ps` to verify the name of your worker
+
+### Updating Code ###
+1. Make necessary changes
+2. Commit the changes to git version control and upload to Heroku
+```bash
+git commit -am "[describe changes here]"
+git push heroku master
+```
+NOTE: after making any changes, make sure the worker is up and running by running `heroku ps`
