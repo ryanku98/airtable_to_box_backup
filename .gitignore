@@ -3,3 +3,6 @@ __pycache__/
 
 # Local backups
 AirTable_Backup_*
+
+# Generated Excel files
+last_uploaded.xlsx
