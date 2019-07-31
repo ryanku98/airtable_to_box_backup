@@ -4,11 +4,11 @@ from sys import exit
 from datetime import datetime
 import os # remove, rename, path.exists
 from json import loads
-from boxsdk import JWTAuth
-from boxsdk import Client
+from boxsdk import JWTAuth, Client
 from glob import glob
 
 last_upload_name = "last_uploaded.xlsx"
+client = None
 
 def backup():
     # Configure AirTable authentication
@@ -54,6 +54,7 @@ def backup():
     # Login to Box
     # Import JWT auth object with config file
     sdk = JWTAuth.from_settings_file('config/box_config.json')
+    global client
     client = Client(sdk) # authenticated client
     # If error occurs here, backup file persists and will be uploaded during next successful run
 
@@ -61,10 +62,13 @@ def backup():
     backups = glob(file_name_template + "*")    # Retrieves non-uploaded backups in order as list
     backups.append(file_name)                   # Add current backup to list
     for backup_file in backups:
-        if not same_as_last(backup_file, rows=record_row, cols=num_headers):
-            upload(client=client, file_name=backup_file)
-        else: # Delete without upload if the same
-            os.remove(backup_file)
+        if os.path.exists(backup_file):
+            if not same_as_last(backup_file, rows=record_row, cols=num_headers):
+                upload(client=client, file_name=backup_file)
+                print("EVENT: File", backup_file, "uploaded")
+            else: # Delete without upload if the same
+                os.remove(backup_file)
+                print("EVENT: File", backup_file, "not uploaded, identical to last")
 
 def upload(client, file_name):
     # Get folder ID
@@ -94,6 +98,3 @@ def same_as_last(doc, rows, cols):
 
 if __name__ == "__main__":
     backup()
-    # doc1 = "AirTable_Backup_2019-07-18--11-53-56.xlsx"
-    # doc2 = "AirTable_Backup_2019-07-18--11-54-13.xlsx"
-    # print(same_as_last(doc=doc2, rows=71, cols=14))
