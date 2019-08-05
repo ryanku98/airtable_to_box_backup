@@ -14,6 +14,7 @@ box_config_path = "config/box_config.json"
 box_folder_id_path = "config/box_folder_id.txt"
 box_last_folder_id_path = "config/box_last_folder_id.txt"
 client = None
+uploaded = False # flag to indicate if new version has been uploaded
 
 def backup():
     # Configure AirTable authentication
@@ -78,7 +79,8 @@ def backup():
                 os.remove(backup_file)
                 print("EVENT: File", backup_file, "not uploaded, identical to last")
 
-    upload_last()
+    if uploaded: # only reupload last if it has been changed
+        upload_last()
 
 # download last_uploaded.xlsx from special folder in Box - snapshot of most recently backed-up version
 def download_last():
@@ -104,6 +106,8 @@ def download_last():
         print("EVENT:", last_upload_name, "not found")
 
 def upload(client, file_name):
+    global uploaded
+    uploaded = True
     # Get folder ID
     f_id = open(box_folder_id_path, "r")
     folder_id = f_id.read()
